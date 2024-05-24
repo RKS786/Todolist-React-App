@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import TodoForm from "../TodoForm/TodoForm";
 import TodoItem from "../TodoItem/TodoItem";
+import './TodoList.css';
 
 
 
@@ -22,7 +23,7 @@ const TodoList = () => {
         // Creating a new todo object with the generated ID
         const todoWithId = { ...newTodo, id: newId };
         // Adding the new todo to the list
-        setTodos([...todos, todoWithId]);
+        setTodos([todoWithId,...todos]);
     }
 
     const deleteTodo = (id) => {
@@ -34,8 +35,9 @@ const TodoList = () => {
     }
 
     const updateTodo = (id, updatedTodo) => {
-        axios.put('https://jsonplaceholder.typicode.com/todos/${id}', {updatedTodo})
+        axios.put('https://jsonplaceholder.typicode.com/todos/${id}', updatedTodo)
         .then(response => {
+            console.log("response update",response)
             setTodos(todos.map(todo => todo.id === id ? response.data : todo))
         })
         .catch(error => console.log("Error updating todo:", error))

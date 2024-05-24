@@ -23,11 +23,11 @@ const TodoItem = ({todo, updateTodo, deleteTodo}) => {
             )
             }
             <div className="buttons">
-                <button onClick={()=> deleteTodo(todo.id)}>Delete</button>
+                <button className="delete-btn" onClick={()=> deleteTodo(todo.id)}>Delete</button>
                 {isEditing ? (
-                    <button onClick={handleUpdateTodo}>Save</button>
+                    <button className="save-btn" onClick={handleUpdateTodo}>Save</button>
                 ) : (
-                    <button onClick={()=> setIsEditing(true)}>Edit</button>
+                    <button className="edit-btn" onClick={()=> setIsEditing(true)}>Edit</button>
                 )
             }
             </div>
