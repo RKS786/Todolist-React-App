@@ -17,7 +17,12 @@ const TodoList = () => {
     console.log("todos",todos);
 
     const handleAddTodo =(newTodo)=>{
-        setTodos([...todos,newTodo]);
+        // Generating a unique ID for the new todo
+        const newId = todos.length + 1;
+        // Creating a new todo object with the generated ID
+        const todoWithId = { ...newTodo, id: newId };
+        // Adding the new todo to the list
+        setTodos([...todos, todoWithId]);
     }
 
     const deleteTodo = (id) => {
@@ -29,7 +34,7 @@ const TodoList = () => {
     }
 
     const updateTodo = (id, updatedTodo) => {
-        axios.put('https://jsonplaceholder.typicode.com/todos/${id}', updatedTodo)
+        axios.put('https://jsonplaceholder.typicode.com/todos/${id}', {updatedTodo})
         .then(response => {
             setTodos(todos.map(todo => todo.id === id ? response.data : todo))
         })
@@ -39,7 +44,7 @@ const TodoList = () => {
     return (
         <div className="todo-list">
             <h1>Todo React App</h1>
-            <TodoForm />
+            <TodoForm addTodo={handleAddTodo}/>
             <ul>
                 {todos.map(todo => {
                     return(
