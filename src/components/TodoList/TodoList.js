@@ -11,7 +11,7 @@ const TodoList = () => {
 
     useEffect(() => {
         axios.get('https://jsonplaceholder.typicode.com/todos')
-        .then(response => setTodos(response.data))
+        .then(response => setTodos((response.data).slice(0,10)))
         .catch(error => console.log("Error:",error));
     },[])
 
@@ -23,11 +23,11 @@ const TodoList = () => {
         // Creating a new todo object with the generated ID
         const todoWithId = { ...newTodo, id: newId };
         // Adding the new todo to the list
-        setTodos([todoWithId,...todos]);
+        setTodos([...todos, todoWithId]);
     }
 
     const deleteTodo = (id) => {
-        axios.delete('https://jsonplaceholder.typicode.com/todos/${id')
+        axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
         .then(() => {
             setTodos(todos.filter(todo => todo.id !== id))
         })
@@ -35,7 +35,7 @@ const TodoList = () => {
     }
 
     const updateTodo = (id, updatedTodo) => {
-        axios.put('https://jsonplaceholder.typicode.com/todos/${id}', updatedTodo)
+        axios.put(`https://jsonplaceholder.typicode.com/todos/${id}`, updatedTodo)
         .then(response => {
             console.log("response update",response)
             setTodos(todos.map(todo => todo.id === id ? response.data : todo))
